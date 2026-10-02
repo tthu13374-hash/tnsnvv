@@ -1,0 +1,3822 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff5fa2">
+<meta name="description" content="Birthday Memory Website">
+<title>Happy Birthday Nguyễn Thị Thảo Nguyên 💗</title>
+
+<style>
+
+/* ============================================================
+   01. RESET
+============================================================ */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+    color:#291725;
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            #ffffff 0,
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            #ffd7e9 0,
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #fff1f8,
+            #f4eaff,
+            #e5f5ff
+        );
+}
+
+/* ============================================================
+   02. GLOBAL
+============================================================ */
+
+button{
+    font-family:inherit;
+}
+
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+button{
+    cursor:pointer;
+}
+
+img{
+    max-width:100%;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ============================================================
+   03. INTRO
+============================================================ */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #291326,
+            #7e235c,
+            #e85097
+        );
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+#intro.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.intro-box{
+    width:min(760px,100%);
+    padding:55px 25px;
+    text-align:center;
+    color:white;
+    border:
+        1px solid
+        rgba(255,255,255,.3);
+    border-radius:40px;
+    background:
+        rgba(255,255,255,.10);
+    backdrop-filter:blur(25px);
+    box-shadow:
+        0 40px 120px
+        rgba(0,0,0,.35);
+    animation:
+        introFloat 4s ease-in-out infinite;
+}
+
+@keyframes introFloat{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+.intro-small{
+    font-size:12px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    opacity:.8;
+}
+
+.intro-box h1{
+    margin-top:25px;
+    font-size:
+        clamp(
+            60px,
+            13vw,
+            135px
+        );
+    line-height:.78;
+    letter-spacing:-9px;
+}
+
+.intro-box h1 span{
+    color:#ffd1e5;
+}
+
+.intro-name{
+    margin-top:35px;
+    font-size:
+        clamp(
+            20px,
+            4vw,
+            34px
+        );
+    font-weight:900;
+}
+
+.intro-date{
+    margin-top:10px;
+    opacity:.8;
+}
+
+.open-button{
+    margin-top:38px;
+    padding:17px 30px;
+    border:none;
+    border-radius:999px;
+    color:#a3296d;
+    background:white;
+    font-weight:900;
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.25);
+    transition:.3s;
+}
+
+.open-button:hover{
+    transform:
+        translateY(-5px)
+        scale(1.05);
+}
+
+/* ============================================================
+   04. CANVAS
+============================================================ */
+
+#starCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+}
+
+#confettiLayer{
+    position:fixed;
+    inset:0;
+    z-index:9000;
+    pointer-events:none;
+}
+
+#heartLayer{
+    position:fixed;
+    inset:0;
+    z-index:8500;
+    pointer-events:none;
+}
+
+#sparkleLayer{
+    position:fixed;
+    inset:0;
+    z-index:9500;
+    pointer-events:none;
+}
+
+/* ============================================================
+   05. MUSIC BUTTON
+============================================================ */
+
+.music-button{
+    position:fixed;
+    top:18px;
+    right:18px;
+    z-index:8000;
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #ff4e9a,
+            #925cf5
+        );
+    box-shadow:
+        0 15px 40px
+        rgba(120,30,100,.25);
+    font-size:23px;
+}
+
+.music-button.playing{
+    animation:
+        musicPulse 1.2s infinite;
+}
+
+@keyframes musicPulse{
+
+    0%{
+        box-shadow:
+            0 0 0 0
+            rgba(255,80,155,.45),
+            0 15px 40px
+            rgba(120,30,100,.25);
+    }
+
+    50%{
+        box-shadow:
+            0 0 0 15px
+            rgba(255,80,155,0),
+            0 15px 40px
+            rgba(120,30,100,.25);
+    }
+
+    100%{
+        box-shadow:
+            0 0 0 0
+            rgba(255,80,155,0),
+            0 15px 40px
+            rgba(120,30,100,.25);
+    }
+
+}
+
+/* ============================================================
+   06. HERO
+============================================================ */
+
+.hero{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:
+        120px
+        20px
+        80px;
+}
+
+.hero-content{
+    width:min(1150px,100%);
+    text-align:center;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 18px;
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+    border-radius:999px;
+    background:
+        rgba(255,255,255,.45);
+    backdrop-filter:blur(15px);
+    color:#a22d70;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.hero h2{
+    margin-top:30px;
+    font-size:
+        clamp(
+            58px,
+            11vw,
+            145px
+        );
+    line-height:.82;
+    letter-spacing:-10px;
+}
+
+.gradient-text{
+    display:block;
+    color:transparent;
+    background:
+        linear-gradient(
+            90deg,
+            #ed3d91,
+            #a163fa,
+            #45baf7,
+            #ed3d91
+        );
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    animation:
+        gradientMove 6s linear infinite;
+}
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0% center;
+    }
+
+    100%{
+        background-position:300% center;
+    }
+
+}
+
+.hero-description{
+    max-width:750px;
+    margin:
+        30px
+        auto
+        0;
+    color:#745f70;
+    font-size:18px;
+    line-height:1.9;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:35px;
+}
+
+.main-button{
+    padding:
+        15px
+        23px;
+    border:none;
+    border-radius:999px;
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #ff4e9a,
+            #975cf4
+        );
+    font-weight:900;
+    box-shadow:
+        0 15px 40px
+        rgba(220,60,140,.25);
+    transition:.3s;
+}
+
+.main-button:hover{
+    transform:
+        translateY(-5px)
+        scale(1.03);
+}
+
+.soft-button{
+    padding:
+        15px
+        23px;
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+    border-radius:999px;
+    color:#873665;
+    background:
+        rgba(255,255,255,.55);
+    backdrop-filter:blur(15px);
+    font-weight:900;
+}
+
+.scroll-down{
+    margin-top:55px;
+    color:#856f7e;
+    animation:
+        scrollBounce 2s infinite;
+}
+
+@keyframes scrollBounce{
+
+    0%,
+    100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(9px);
+    }
+
+}
+
+/* ============================================================
+   07. SECTIONS
+============================================================ */
+
+.section{
+    position:relative;
+    z-index:2;
+    width:min(1150px,100%);
+    margin:auto;
+    padding:
+        100px
+        20px;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.section-heading small{
+    color:#d53c88;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+.section-heading h2{
+    margin-top:12px;
+    font-size:
+        clamp(
+            38px,
+            6vw,
+            70px
+        );
+    line-height:.95;
+    letter-spacing:-4px;
+}
+
+.section-heading p{
+    max-width:680px;
+    margin:
+        20px
+        auto
+        0;
+    color:#765f70;
+    line-height:1.8;
+}
+
+/* ============================================================
+   08. GLASS
+============================================================ */
+
+.glass{
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+    background:
+        rgba(255,255,255,.45);
+    backdrop-filter:blur(20px);
+    box-shadow:
+        0 25px 80px
+        rgba(70,25,60,.15);
+}
+
+/* ============================================================
+   09. LETTER
+============================================================ */
+
+.letter{
+    padding:45px;
+    border-radius:32px;
+}
+
+.letter h3{
+    font-size:32px;
+}
+
+.letter p{
+    margin-top:17px;
+    color:#675367;
+    font-size:17px;
+    line-height:2;
+}
+
+.signature{
+    margin-top:30px;
+    color:#c13a7e;
+    font-weight:900;
+    font-size:18px;
+}
+
+/* ============================================================
+   10. PHOTO GALLERY
+============================================================ */
+
+.gallery{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:18px;
+}
+
+.photo-card{
+    position:relative;
+    min-height:350px;
+    overflow:hidden;
+    border-radius:28px;
+    background:#eee;
+    box-shadow:
+        0 20px 60px
+        rgba(60,20,55,.15);
+    cursor:pointer;
+    transition:
+        transform .4s ease;
+}
+
+.photo-card:hover{
+    transform:
+        translateY(-10px)
+        rotate(-1deg);
+}
+
+.photo-card:nth-child(2n){
+    transform:
+        translateY(25px);
+}
+
+.photo-card:nth-child(2n):hover{
+    transform:
+        translateY(12px)
+        rotate(1deg)
+        scale(1.02);
+}
+
+.photo-card img{
+    width:100%;
+    height:100%;
+    min-height:350px;
+    object-fit:cover;
+    display:block;
+    transition:
+        transform .8s ease,
+        filter .8s ease;
+}
+
+.photo-card:hover img{
+    transform:scale(1.1);
+    filter:saturate(1.15);
+}
+
+.photo-overlay{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:
+        45px
+        20px
+        20px;
+    color:white;
+    background:
+        linear-gradient(
+            transparent,
+            rgba(20,10,20,.9)
+        );
+}
+
+.photo-overlay h3{
+    font-size:20px;
+}
+
+.photo-overlay p{
+    margin-top:5px;
+    font-size:13px;
+    opacity:.8;
+}
+
+/* ============================================================
+   11. TIMELINE
+============================================================ */
+
+.timeline{
+    position:relative;
+    max-width:850px;
+    margin:auto;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:50%;
+    width:3px;
+    transform:
+        translateX(-50%);
+    background:
+        linear-gradient(
+            #ff74ad,
+            #9d67fa,
+            #69caff
+        );
+}
+
+.timeline-item{
+    position:relative;
+    width:50%;
+    padding:
+        15px
+        35px;
+}
+
+.timeline-item:nth-child(odd){
+    left:0;
+    text-align:right;
+}
+
+.timeline-item:nth-child(even){
+    left:50%;
+}
+
+.timeline-dot{
+    position:absolute;
+    top:27px;
+    width:18px;
+    height:18px;
+    border:
+        4px solid white;
+    border-radius:50%;
+    background:#ff5f9e;
+    box-shadow:
+        0 5px 20px
+        rgba(220,50,130,.3);
+}
+
+.timeline-item:nth-child(odd)
+.timeline-dot{
+    right:-9px;
+}
+
+.timeline-item:nth-child(even)
+.timeline-dot{
+    left:-9px;
+}
+
+.timeline-content{
+    padding:25px;
+    border-radius:24px;
+}
+
+.timeline-content h3{
+    margin-bottom:9px;
+}
+
+.timeline-content p{
+    color:#765f70;
+    line-height:1.75;
+}
+
+/* ============================================================
+   12. WISH CARDS
+============================================================ */
+
+.wish-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:18px;
+}
+
+.wish-card{
+    min-height:230px;
+    padding:30px;
+    border-radius:28px;
+    transition:.35s;
+}
+
+.wish-card:hover{
+    transform:
+        translateY(-10px)
+        rotate(-1deg);
+}
+
+.wish-icon{
+    width:60px;
+    height:60px;
+    display:grid;
+    place-items:center;
+    margin-bottom:20px;
+    border-radius:20px;
+    background:
+        linear-gradient(
+            135deg,
+            #ffd0e3,
+            #e4d4ff
+        );
+    font-size:28px;
+}
+
+.wish-card h3{
+    margin-bottom:12px;
+}
+
+.wish-card p{
+    color:#765f70;
+    line-height:1.7;
+}
+
+/* ============================================================
+   13. CAKE
+============================================================ */
+
+.cake-area{
+    text-align:center;
+}
+
+.cake{
+    position:relative;
+    width:350px;
+    height:270px;
+    margin:
+        30px
+        auto;
+}
+
+.plate{
+    position:absolute;
+    bottom:5px;
+    left:50%;
+    width:100%;
+    height:28px;
+    transform:
+        translateX(-50%);
+    border-radius:50%;
+    background:
+        linear-gradient(
+            #fff,
+            #ddd
+        );
+    box-shadow:
+        0 15px 30px
+        rgba(0,0,0,.15);
+}
+
+.cake-body{
+    position:absolute;
+    bottom:32px;
+    left:50%;
+    width:80%;
+    height:120px;
+    transform:
+        translateX(-50%);
+    border-radius:
+        20px
+        20px
+        30px
+        30px;
+    background:
+        linear-gradient(
+            #ffb2d0,
+            #e85e9e
+        );
+}
+
+.cream{
+    position:absolute;
+    bottom:126px;
+    left:50%;
+    width:85%;
+    height:40px;
+    transform:
+        translateX(-50%);
+    border-radius:50%;
+    background:#fff9fc;
+}
+
+.candle{
+    position:absolute;
+    bottom:160px;
+    width:16px;
+    height:65px;
+    border-radius:6px;
+    background:
+        repeating-linear-gradient(
+            135deg,
+            white 0 8px,
+            #ff68a6 8px 16px
+        );
+}
+
+.candle:nth-child(1){
+    left:29%;
+}
+
+.candle:nth-child(2){
+    left:42%;
+}
+
+.candle:nth-child(3){
+    left:55%;
+}
+
+.candle:nth-child(4){
+    left:68%;
+}
+
+.flame{
+    position:absolute;
+    top:-25px;
+    left:50%;
+    width:16px;
+    height:26px;
+    transform:
+        translateX(-50%);
+    border-radius:
+        60%
+        40%
+        60%
+        40%;
+    background:
+        linear-gradient(
+            #fff6a0,
+            #ff7f1f
+        );
+    box-shadow:
+        0 0 25px
+        8px
+        rgba(255,160,30,.3);
+    animation:
+        flame .55s
+        infinite
+        alternate;
+}
+
+@keyframes flame{
+
+    from{
+        transform:
+            translateX(-50%)
+            rotate(-6deg)
+            scale(.95);
+    }
+
+    to{
+        transform:
+            translateX(-50%)
+            rotate(6deg)
+            scale(1.1);
+    }
+
+}
+
+/* ============================================================
+   14. PLAYLIST
+============================================================ */
+
+.playlist{
+    display:grid;
+    gap:12px;
+    max-width:760px;
+    margin:auto;
+}
+
+.song-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:16px 18px;
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+    border-radius:20px;
+    background:
+        rgba(255,255,255,.45);
+    backdrop-filter:blur(15px);
+}
+
+.song-title{
+    font-weight:700;
+}
+
+.song-button{
+    border:none;
+    padding:
+        9px
+        15px;
+    border-radius:999px;
+    color:white;
+    background:
+        linear-gradient(
+            135deg,
+            #ff4f9a,
+            #925df5
+        );
+    font-weight:900;
+}
+
+/* ============================================================
+   15. FINAL
+============================================================ */
+
+.final-box{
+    padding:
+        75px
+        25px;
+    border-radius:42px;
+    text-align:center;
+    color:white;
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(255,255,255,.22),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(255,255,255,.15),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #a32d70,
+            #e84d96,
+            #8658dc
+        );
+    box-shadow:
+        0 30px 100px
+        rgba(110,30,100,.3);
+}
+
+.final-emoji{
+    font-size:65px;
+}
+
+.final-box h2{
+    margin-top:20px;
+    font-size:
+        clamp(
+            45px,
+            8vw,
+            90px
+        );
+    letter-spacing:-5px;
+}
+
+.final-box p{
+    max-width:700px;
+    margin:
+        22px
+        auto
+        0;
+    line-height:1.8;
+    opacity:.9;
+}
+
+.final-button{
+    margin-top:32px;
+    padding:
+        16px
+        25px;
+    border:none;
+    border-radius:999px;
+    color:#a12c70;
+    background:white;
+    font-weight:900;
+}
+
+/* ============================================================
+   16. MODAL
+============================================================ */
+
+#photoModal{
+    position:fixed;
+    inset:0;
+    z-index:99998;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        rgba(10,4,10,.85);
+    backdrop-filter:blur(15px);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+#photoModal.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-content{
+    position:relative;
+    width:min(1000px,100%);
+    padding:10px;
+    border-radius:28px;
+    background:white;
+}
+
+.modal-content img{
+    width:100%;
+    max-height:85vh;
+    object-fit:contain;
+    border-radius:20px;
+    display:block;
+}
+
+.close-modal{
+    position:absolute;
+    top:-18px;
+    right:-18px;
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    color:#9b2c6c;
+    background:white;
+    font-size:28px;
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.25);
+}
+
+/* ============================================================
+   17. REVEAL
+============================================================ */
+
+.reveal{
+    opacity:0;
+    transform:
+        translateY(40px);
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+}
+
+/* ============================================================
+   18. RESPONSIVE
+============================================================ */
+
+@media(max-width:850px){
+
+    .gallery{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .wish-grid{
+        grid-template-columns:1fr;
+    }
+
+    .timeline::before{
+        left:10px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(even){
+        width:100%;
+        left:0;
+        padding-left:40px;
+        padding-right:5px;
+        text-align:left;
+    }
+
+    .timeline-item:nth-child(odd)
+    .timeline-dot,
+    .timeline-item:nth-child(even)
+    .timeline-dot{
+        left:1px;
+        right:auto;
+    }
+
+}
+
+@media(max-width:560px){
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .photo-card:nth-child(2n){
+        transform:none;
+    }
+
+    .photo-card:nth-child(2n):hover{
+        transform:
+            translateY(-10px)
+            rotate(1deg)
+            scale(1.02);
+    }
+
+    .section{
+        padding:
+            70px
+            15px;
+    }
+
+    .letter{
+        padding:28px 22px;
+    }
+
+    .hero h2{
+        letter-spacing:-5px;
+    }
+
+    .music-button{
+        width:52px;
+        height:52px;
+        top:12px;
+        right:12px;
+    }
+
+    .cake{
+        transform:
+            scale(.82);
+        margin-top:0;
+        margin-bottom:-15px;
+    }
+
+    .final-box{
+        padding:
+            60px
+            20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     INTRO
+============================================================ -->
+
+<div id="intro">
+
+    <div class="intro-box">
+
+        <div class="intro-small">
+            A LITTLE BIRTHDAY SURPRISE
+        </div>
+
+        <h1>
+            Happy
+            <br>
+            <span>Birthday!</span>
+        </h1>
+
+        <div
+            class="intro-name"
+            id="introName"
+        >
+            Nguyễn Thị Thảo Nguyên 💗
+        </div>
+
+        <div
+            class="intro-date"
+            id="introDate"
+        >
+            24/09/2006
+        </div>
+
+        <button
+            class="open-button"
+            id="openButton"
+        >
+            🎁 MỞ MÓN QUÀ
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     MUSIC
+============================================================ -->
+
+<audio
+    id="audio"
+    preload="auto"
+></audio>
+
+<button
+    class="music-button"
+    id="musicButton"
+>
+    🎵
+</button>
+
+
+<!-- ============================================================
+     EFFECT LAYERS
+============================================================ -->
+
+<canvas id="starCanvas"></canvas>
+
+<div id="heartLayer"></div>
+
+<div id="confettiLayer"></div>
+
+<div id="sparkleLayer"></div>
+
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+
+<header class="hero">
+
+    <div class="hero-content reveal">
+
+        <div class="badge">
+            🎂 BIRTHDAY MEMORY UNIVERSE
+        </div>
+
+        <h2>
+            Happy Birthday
+
+            <span
+                class="gradient-text"
+                id="heroName"
+            >
+                Nguyễn Thị Thảo Nguyên
+            </span>
+        </h2>
+
+        <p class="hero-description">
+            Một chiếc website nhỏ chứa thật nhiều
+            ảnh, thật nhiều bài hát, thật nhiều
+            kỷ niệm và thật nhiều lời chúc dành
+            cho một người thật đặc biệt. 💗
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="main-button"
+                id="wishButton"
+            >
+                ✨ NHẬN LỜI CHÚC
+            </button>
+
+            <button
+                class="soft-button"
+                id="galleryButton"
+            >
+                📸 XEM KỶ NIỆM
+            </button>
+
+        </div>
+
+        <div class="scroll-down">
+            ↓ kéo xuống để khám phá ↓
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ============================================================
+     LETTER
+============================================================ -->
+
+<section class="section">
+
+    <div class="section-heading reveal">
+
+        <small>
+            LETTER
+        </small>
+
+        <h2>
+            Một lời chúc nhỏ 💌
+        </h2>
+
+        <p>
+            Bạn có thể sửa toàn bộ đoạn này thành
+            lời chúc riêng của mình.
+        </p>
+
+    </div>
+
+    <div
+        class="letter glass reveal"
+    >
+
+        <h3>
+            Gửi Thảo Nguyên,
+        </h3>
+
+        <p>
+            Chúc bà tuổi mới thật nhiều niềm vui,
+            thật nhiều may mắn và thật nhiều điều
+            tốt đẹp.
+        </p>
+
+        <p>
+            Mong những điều bà đang cố gắng sẽ
+            từng chút một trở thành hiện thực.
+            Mong những ngày phía trước luôn có
+            người yêu thương, đồng hành và làm bà
+            mỉm cười.
+        </p>
+
+        <p>
+            Tuổi mới rồi thì phải thật vui,
+            thật xinh, thật hạnh phúc và nhớ rằng
+            bà luôn là một người rất đặc biệt
+            trong lòng những người yêu quý bà. 💗
+        </p>
+
+        <p>
+            Cảm ơn vì đã xuất hiện trong cuộc đời
+            này và tạo ra thật nhiều kỷ niệm đẹp.
+        </p>
+
+        <div class="signature">
+            Happy Birthday, Thảo Nguyên! 🎂💗
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     PHOTO GALLERY
+============================================================ -->
+
+<section
+    class="section"
+    id="memories"
+>
+
+    <div class="section-heading reveal">
+
+        <small>
+            PHOTO WALL
+        </small>
+
+        <h2>
+            Kho ảnh kỷ niệm 📸
+        </h2>
+
+        <p>
+            Thêm bao nhiêu ảnh tùy thích ở phần
+            CONFIG phía cuối code.
+        </p>
+
+    </div>
+
+    <div
+        class="gallery"
+        id="gallery"
+    ></div>
+
+</section>
+
+
+<!-- ============================================================
+     TIMELINE
+============================================================ -->
+
+<section class="section">
+
+    <div class="section-heading reveal">
+
+        <small>
+            MEMORY TIMELINE
+        </small>
+
+        <h2>
+            Những chặng đường ✨
+        </h2>
+
+        <p>
+            Có thể sửa thành những kỷ niệm thật
+            của hai bà.
+        </p>
+
+    </div>
+
+    <div class="timeline">
+
+        <div class="timeline-item reveal">
+
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content glass">
+
+                <h3>
+                    🌱 Những ngày đầu
+                </h3>
+
+                <p>
+                    Có những cuộc gặp tưởng như
+                    bình thường nhưng sau này lại
+                    trở thành một phần rất đẹp
+                    trong ký ức.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content glass">
+
+                <h3>
+                    🌸 Những kỷ niệm
+                </h3>
+
+                <p>
+                    Những lần đi chơi, những lần
+                    nói chuyện, những lần cười
+                    không ngừng và cả những khoảnh
+                    khắc rất ngốc nghếch.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content glass">
+
+                <h3>
+                    ✨ Những ngày vui
+                </h3>
+
+                <p>
+                    Chỉ cần nhìn lại một tấm ảnh
+                    thôi là cả một câu chuyện cũ
+                    lại hiện về.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="timeline-item reveal">
+
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content glass">
+
+                <h3>
+                    🎂 Ngày hôm nay
+                </h3>
+
+                <p>
+                    Thêm một tuổi mới, thêm nhiều
+                    ước mơ mới và thêm thật nhiều
+                    câu chuyện đẹp ở phía trước.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     WISH CARDS
+============================================================ -->
+
+<section class="section">
+
+    <div class="section-heading reveal">
+
+        <small>
+            NEW AGE
+        </small>
+
+        <h2>
+            Tuổi mới có gì? 🌷
+        </h2>
+
+    </div>
+
+
+    <div class="wish-grid">
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                🌸
+            </div>
+
+            <h3>
+                Thật nhiều niềm vui
+            </h3>
+
+            <p>
+                Mong mỗi ngày đều có ít nhất một
+                chuyện nhỏ xíu khiến bà cười.
+            </p>
+
+        </div>
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                ✨
+            </div>
+
+            <h3>
+                Thật nhiều may mắn
+            </h3>
+
+            <p>
+                Mong mọi cơ hội tốt đẹp đều đến
+                đúng lúc và mọi cố gắng đều có
+                kết quả xứng đáng.
+            </p>
+
+        </div>
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                💗
+            </div>
+
+            <h3>
+                Thật nhiều yêu thương
+            </h3>
+
+            <p>
+                Mong bà luôn được yêu thương,
+                trân trọng và luôn có những người
+                thật lòng ở bên cạnh.
+            </p>
+
+        </div>
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                💰
+            </div>
+
+            <h3>
+                Thật nhiều tài lộc
+            </h3>
+
+            <p>
+                Tiền vào như nước, ví lúc nào cũng
+                đầy và mua gì cũng không cần suy nghĩ.
+            </p>
+
+        </div>
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                📚
+            </div>
+
+            <h3>
+                Học hành thuận lợi
+            </h3>
+
+            <p>
+                Mong mọi bài kiểm tra đều ổn,
+                mọi deadline đều nhẹ nhàng và
+                mọi mục tiêu đều đạt được.
+            </p>
+
+        </div>
+
+
+        <div class="wish-card glass reveal">
+
+            <div class="wish-icon">
+                🧸
+            </div>
+
+            <h3>
+                Luôn vui vẻ
+            </h3>
+
+            <p>
+                Có mệt thì nghỉ, có buồn thì khóc,
+                rồi lại đứng dậy và tiếp tục thật
+                rực rỡ nha.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     CAKE
+============================================================ -->
+
+<section class="section cake-area">
+
+    <div class="section-heading reveal">
+
+        <small>
+            MAKE A WISH
+        </small>
+
+        <h2>
+            Thổi nến thôi nào! 🕯️
+        </h2>
+
+        <p>
+            Ước một điều thật đẹp rồi bấm nút.
+        </p>
+
+    </div>
+
+
+    <div class="cake reveal">
+
+        <div class="candle">
+
+            <span class="flame"></span>
+
+        </div>
+
+
+        <div class="candle">
+
+            <span class="flame"></span>
+
+        </div>
+
+
+        <div class="candle">
+
+            <span class="flame"></span>
+
+        </div>
+
+
+        <div class="candle">
+
+            <span class="flame"></span>
+
+        </div>
+
+
+        <div class="cream"></div>
+
+        <div class="cake-body"></div>
+
+        <div class="plate"></div>
+
+    </div>
+
+
+    <button
+        class="main-button reveal"
+        id="blowButton"
+    >
+        🎉 THỔI NẾN & PHÁO HOA
+    </button>
+
+</section>
+
+
+<!-- ============================================================
+     MUSIC PLAYLIST
+============================================================ -->
+
+<section class="section">
+
+    <div class="section-heading reveal">
+
+        <small>
+            MUSIC BOX
+        </small>
+
+        <h2>
+            Những bài hát dành cho hôm nay 🎵
+        </h2>
+
+        <p>
+            Có thể thêm 5, 10, 20 hoặc nhiều bài
+            hát hơn ở phần CONFIG.
+        </p>
+
+    </div>
+
+
+    <div
+        class="playlist"
+        id="playlist"
+    ></div>
+
+</section>
+
+
+<!-- ============================================================
+     FINAL
+============================================================ -->
+
+<section class="section">
+
+    <div class="final-box reveal">
+
+        <div class="final-emoji">
+            🎁
+        </div>
+
+        <h2>
+            HAPPY BIRTHDAY!
+        </h2>
+
+        <p>
+            Mong tuổi mới của Thảo Nguyên có
+            thật nhiều tiếng cười, thật nhiều
+            may mắn, thật nhiều yêu thương và
+            thật nhiều kỷ niệm đáng nhớ.
+        </p>
+
+        <button
+            class="final-button"
+            id="finalButton"
+        >
+            💖 BẤM VÀO ĐÂY
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+
+<footer
+    style="
+        position:relative;
+        z-index:2;
+        padding:30px 20px 70px;
+        text-align:center;
+        color:#806b7b;
+    "
+>
+
+    Made with 💗 for Nguyễn Thị Thảo Nguyên.
+
+</footer>
+
+
+<!-- ============================================================
+     PHOTO MODAL
+============================================================ -->
+
+<div id="photoModal">
+
+    <div class="modal-content">
+
+        <button
+            class="close-modal"
+            id="closeModal"
+        >
+            ×
+        </button>
+
+        <img
+            id="modalImage"
+            src=""
+            alt="Birthday memory"
+        >
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   ============================================================
+   CONFIGURATION
+   ============================================================
+   CHỈ CẦN SỬA PHẦN NÀY.
+   ============================================================
+============================================================ */
+
+
+/* ============================================================
+   THÔNG TIN NGƯỜI NHẬN
+============================================================ */
+
+const CONFIG = {
+
+    name:
+        "Nguyễn Thị Thảo Nguyên",
+
+    birthday:
+        "24/09/2006",
+
+
+/* ============================================================
+   ẢNH
+   ============================================================
+   Đặt ảnh vào thư mục:
+
+   assets/
+
+   Ví dụ:
+
+   assets/anh01.jpg
+   assets/anh02.jpg
+   assets/anh03.jpg
+
+   Sau đó thêm tên vào đây.
+============================================================ */
+
+    photos:[
+        "assets/anh01.jpg",
+        "assets/anh02.jpg",
+        "assets/anh03.jpg",
+        "assets/anh04.jpg",
+        "assets/anh05.jpg",
+        "assets/anh06.jpg",
+        "assets/anh07.jpg",
+        "assets/anh08.jpg",
+        "assets/anh09.jpg",
+        "assets/anh10.jpg",
+
+        /*
+        THÊM ẢNH TIẾP:
+
+        "assets/anh11.jpg",
+        "assets/anh12.jpg",
+        "assets/anh13.jpg",
+        "assets/anh14.jpg",
+        "assets/anh15.jpg",
+        "assets/anh16.jpg",
+        "assets/anh17.jpg",
+        "assets/anh18.jpg",
+        "assets/anh19.jpg",
+        "assets/anh20.jpg",
+
+        */
+
+    ],
+
+
+/* ============================================================
+   NHẠC
+   ============================================================
+   Đặt nhạc vào thư mục:
+
+   music/
+
+   Ví dụ:
+
+   music/song01.mp3
+   music/song02.mp3
+============================================================ */
+
+    songs:[
+
+        {
+            name:
+                "Happy Birthday To You",
+            file:
+                "music/happy-birthday.mp3"
+        },
+
+        {
+            name:
+                "Bài hát kỷ niệm 01",
+            file:
+                "music/song01.mp3"
+        },
+
+        {
+            name:
+                "Bài hát kỷ niệm 02",
+            file:
+                "music/song02.mp3"
+        },
+
+        /*
+        THÊM NHẠC:
+
+        {
+            name:"Tên bài hát 03",
+            file:"music/song03.mp3"
+        },
+
+        {
+            name:"Tên bài hát 04",
+            file:"music/song04.mp3"
+        },
+
+        {
+            name:"Tên bài hát 05",
+            file:"music/song05.mp3"
+        },
+
+        */
+
+    ],
+
+
+/* ============================================================
+   MÀU HIỆU ỨNG
+============================================================ */
+
+    colors:[
+        "#ff4f9a",
+        "#ff8fbd",
+        "#ffd166",
+        "#9b6cff",
+        "#67c7ff",
+        "#ffffff",
+        "#ff6b6b",
+        "#c77dff"
+    ],
+
+
+/* ============================================================
+   EMOJI TIM
+============================================================ */
+
+    hearts:[
+        "💗",
+        "💖",
+        "💕",
+        "💓",
+        "💞",
+        "💘",
+        "💝",
+        "💟",
+        "✨",
+        "🌸"
+    ]
+
+};
+
+
+/* ============================================================
+   ELEMENTS
+============================================================ */
+
+const intro =
+    document.getElementById(
+        "intro"
+    );
+
+const openButton =
+    document.getElementById(
+        "openButton"
+    );
+
+const audio =
+    document.getElementById(
+        "audio"
+    );
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+const gallery =
+    document.getElementById(
+        "gallery"
+    );
+
+const playlist =
+    document.getElementById(
+        "playlist"
+    );
+
+const heartLayer =
+    document.getElementById(
+        "heartLayer"
+    );
+
+const confettiLayer =
+    document.getElementById(
+        "confettiLayer"
+    );
+
+const sparkleLayer =
+    document.getElementById(
+        "sparkleLayer"
+    );
+
+const modal =
+    document.getElementById(
+        "photoModal"
+    );
+
+const modalImage =
+    document.getElementById(
+        "modalImage"
+    );
+
+const closeModal =
+    document.getElementById(
+        "closeModal"
+    );
+
+
+/* ============================================================
+   HIỂN THỊ TÊN
+============================================================ */
+
+document
+    .getElementById(
+        "introName"
+    )
+    .textContent =
+        CONFIG.name +
+        " 💗";
+
+document
+    .getElementById(
+        "introDate"
+    )
+    .textContent =
+        CONFIG.birthday;
+
+document
+    .getElementById(
+        "heroName"
+    )
+    .textContent =
+        CONFIG.name;
+
+
+/* ============================================================
+   GALLERY
+============================================================ */
+
+function renderGallery(){
+
+    gallery.innerHTML = "";
+
+    CONFIG.photos.forEach(
+        function(
+            photo,
+            index
+        ){
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+            card.className =
+                "photo-card reveal";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+            image.src =
+                photo;
+
+            image.alt =
+                "Kỷ niệm " +
+                (index + 1);
+
+
+            const overlay =
+                document.createElement(
+                    "div"
+                );
+
+            overlay.className =
+                "photo-overlay";
+
+
+            overlay.innerHTML =
+
+                `
+                    <h3>
+                        Kỷ niệm #${index + 1} 💗
+                    </h3>
+
+                    <p>
+                        Bấm để xem ảnh lớn
+                    </p>
+                `;
+
+
+            card.appendChild(
+                image
+            );
+
+            card.appendChild(
+                overlay
+            );
+
+
+            card.addEventListener(
+                "click",
+                function(){
+
+                    openPhoto(
+                        photo
+                    );
+
+                }
+            );
+
+
+            gallery.appendChild(
+                card
+            );
+
+
+            setTimeout(
+                function(){
+
+                    card.classList.add(
+                        "show"
+                    );
+
+                },
+                index * 70
+            );
+
+        }
+    );
+
+}
+
+renderGallery();
+
+
+/* ============================================================
+   MODAL ẢNH
+============================================================ */
+
+function openPhoto(
+    source
+){
+
+    modalImage.src =
+        source;
+
+    modal.classList.add(
+        "show"
+    );
+
+}
+
+function closePhoto(){
+
+    modal.classList.remove(
+        "show"
+    );
+
+    setTimeout(
+        function(){
+
+            modalImage.src =
+                "";
+
+        },
+        300
+    );
+
+}
+
+closeModal.addEventListener(
+    "click",
+    closePhoto
+);
+
+
+modal.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            modal
+        ){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   ESC ĐÓNG ẢNH
+============================================================ */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   PLAYLIST
+============================================================ */
+
+let currentSong =
+    0;
+
+
+function renderPlaylist(){
+
+    playlist.innerHTML =
+        "";
+
+
+    CONFIG.songs.forEach(
+        function(
+            song,
+            index
+        ){
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "song-item";
+
+
+            const title =
+                document.createElement(
+                    "div"
+                );
+
+            title.className =
+                "song-title";
+
+            title.textContent =
+                "🎵 " +
+                song.name;
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "song-button";
+
+            button.textContent =
+                "▶ PHÁT";
+
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    playSong(
+                        index
+                    );
+
+                }
+            );
+
+
+            row.appendChild(
+                title
+            );
+
+            row.appendChild(
+                button
+            );
+
+
+            playlist.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+renderPlaylist();
+
+
+/* ============================================================
+   MUSIC
+============================================================ */
+
+function playSong(
+    index
+){
+
+    if(
+        !CONFIG.songs[index]
+    ){
+
+        return;
+
+    }
+
+
+    currentSong =
+        index;
+
+
+    audio.src =
+        CONFIG
+            .songs[index]
+            .file;
+
+
+    audio.play()
+        .then(
+            function(){
+
+                musicButton.textContent =
+                    "🔊";
+
+                musicButton.classList.add(
+                    "playing"
+                );
+
+            }
+        )
+        .catch(
+            function(error){
+
+                console.log(
+                    "Không thể tự phát nhạc:",
+                    error
+                );
+
+            }
+        );
+
+}
+
+
+function toggleMusic(){
+
+    if(
+        audio.paused
+    ){
+
+        if(
+            !audio.src
+        ){
+
+            playSong(
+                currentSong
+            );
+
+        }
+        else{
+
+            audio.play();
+
+        }
+
+
+        musicButton.textContent =
+            "🔊";
+
+        musicButton.classList.add(
+            "playing"
+        );
+
+    }
+    else{
+
+        audio.pause();
+
+        musicButton.textContent =
+            "🎵";
+
+        musicButton.classList.remove(
+            "playing"
+        );
+
+    }
+
+}
+
+
+musicButton.addEventListener(
+    "click",
+    toggleMusic
+);
+
+
+/* ============================================================
+   TỰ ĐỘNG CHUYỂN BÀI
+============================================================ */
+
+audio.addEventListener(
+    "ended",
+    function(){
+
+        currentSong++;
+
+        if(
+            currentSong >=
+            CONFIG.songs.length
+        ){
+
+            currentSong =
+                0;
+
+        }
+
+
+        if(
+            CONFIG.songs.length > 0
+        ){
+
+            playSong(
+                currentSong
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   MỞ WEBSITE
+============================================================ */
+
+openButton.addEventListener(
+    "click",
+    function(){
+
+        intro.classList.add(
+            "hide"
+        );
+
+
+        if(
+            CONFIG.songs.length > 0
+        ){
+
+            playSong(
+                0
+            );
+
+        }
+
+
+        createConfetti(
+            180
+        );
+
+
+        createHearts(
+            35
+        );
+
+    }
+);
+
+
+/* ============================================================
+   BUTTON LỜI CHÚC
+============================================================ */
+
+document
+    .getElementById(
+        "wishButton"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            document
+                .querySelector(
+                    ".letter"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth",
+                    block:
+                        "center"
+                });
+
+
+            createHearts(
+                20
+            );
+
+
+            createSparklesAround(
+                window.innerWidth / 2,
+                window.innerHeight / 2,
+                30
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   BUTTON GALLERY
+============================================================ */
+
+document
+    .getElementById(
+        "galleryButton"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            document
+                .getElementById(
+                    "memories"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
+
+        }
+    );
+
+
+/* ============================================================
+   REVEAL
+============================================================ */
+
+const revealObserver =
+    new IntersectionObserver(
+        function(
+            entries
+        ){
+
+            entries.forEach(
+                function(
+                    entry
+                ){
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry
+                            .target
+                            .classList
+                            .add(
+                                "show"
+                            );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:
+                .1
+        }
+    );
+
+
+document
+    .querySelectorAll(
+        ".reveal"
+    )
+    .forEach(
+        function(
+            element
+        ){
+
+            revealObserver.observe(
+                element
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   TIM BAY
+============================================================ */
+
+function createHearts(
+    amount
+){
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        const heart =
+            document.createElement(
+                "div"
+            );
+
+
+        heart.textContent =
+            CONFIG
+                .hearts[
+                    Math.floor(
+                        Math.random() *
+                        CONFIG.hearts.length
+                    )
+                ];
+
+
+        heart.style.position =
+            "fixed";
+
+        heart.style.left =
+            Math.random() * 100 +
+            "vw";
+
+        heart.style.bottom =
+            "-60px";
+
+        heart.style.fontSize =
+            15 +
+            Math.random() * 28 +
+            "px";
+
+        heart.style.pointerEvents =
+            "none";
+
+        heart.style.zIndex =
+            "8500";
+
+
+        const drift =
+            (
+                Math.random()
+                -
+                .5
+            ) * 240;
+
+
+        const duration =
+            4500 +
+            Math.random() * 5000;
+
+
+        const animation =
+            heart.animate(
+                [
+
+                    {
+                        transform:
+                            "translateY(0) translateX(0) rotate(0)",
+                        opacity:
+                            0
+                    },
+
+                    {
+                        opacity:
+                            1
+                    },
+
+                    {
+                        transform:
+                            `translateY(-115vh)
+                             translateX(${drift}px)
+                             rotate(360deg)`,
+                        opacity:
+                            0
+                    }
+
+                ],
+                {
+                    duration:
+                        duration,
+                    easing:
+                        "cubic-bezier(.2,.8,.2,1)"
+                }
+            );
+
+
+        heartLayer.appendChild(
+            heart
+        );
+
+
+        animation.finished.then(
+            function(){
+
+                heart.remove();
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   CONFETTI
+============================================================ */
+
+function createConfetti(
+    amount
+){
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        const piece =
+            document.createElement(
+                "span"
+            );
+
+
+        piece.style.position =
+            "fixed";
+
+        piece.style.left =
+            Math.random() * 100 +
+            "vw";
+
+        piece.style.top =
+            "-30px";
+
+        piece.style.width =
+            5 +
+            Math.random() * 10 +
+            "px";
+
+        piece.style.height =
+            8 +
+            Math.random() * 17 +
+            "px";
+
+
+        piece.style.background =
+            CONFIG
+                .colors[
+                    Math.floor(
+                        Math.random() *
+                        CONFIG.colors.length
+                    )
+                ];
+
+
+        piece.style.borderRadius =
+            Math.random() > .5
+                ? "50%"
+                : "2px";
+
+
+        piece.style.pointerEvents =
+            "none";
+
+
+        const drift =
+            (
+                Math.random()
+                -
+                .5
+            ) * 700;
+
+
+        const rotation =
+            400 +
+            Math.random() * 1200;
+
+
+        const duration =
+            2500 +
+            Math.random() * 3500;
+
+
+        const animation =
+            piece.animate(
+                [
+
+                    {
+                        transform:
+                            "translateY(0) rotate(0)",
+                        opacity:
+                            1
+                    },
+
+                    {
+                        transform:
+                            `translate(${drift}px,110vh)
+                             rotate(${rotation}deg)`,
+                        opacity:
+                            0
+                    }
+
+                ],
+                {
+                    duration:
+                        duration,
+                    easing:
+                        "cubic-bezier(.15,.7,.25,1)"
+                }
+            );
+
+
+        confettiLayer.appendChild(
+            piece
+        );
+
+
+        animation.finished.then(
+            function(){
+
+                piece.remove();
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   SPARKLE CLICK
+============================================================ */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        createSparkle(
+            event.clientX,
+            event.clientY
+        );
+
+    }
+);
+
+
+function createSparkle(
+    x,
+    y
+){
+
+    const sparkle =
+        document.createElement(
+            "span"
+        );
+
+
+    const symbols = [
+        "✦",
+        "✧",
+        "⋆",
+        "✨",
+        "⭐"
+    ];
+
+
+    sparkle.textContent =
+        symbols[
+            Math.floor(
+                Math.random() *
+                symbols.length
+            )
+        ];
+
+
+    sparkle.style.position =
+        "fixed";
+
+    sparkle.style.left =
+        x +
+        "px";
+
+    sparkle.style.top =
+        y +
+        "px";
+
+    sparkle.style.color =
+        CONFIG
+            .colors[
+                Math.floor(
+                    Math.random() *
+                    CONFIG.colors.length
+                )
+            ];
+
+    sparkle.style.fontSize =
+        20 +
+        Math.random() * 15 +
+        "px";
+
+    sparkle.style.pointerEvents =
+        "none";
+
+    sparkle.style.zIndex =
+        "99999";
+
+
+    const animation =
+        sparkle.animate(
+            [
+
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(.3)",
+                    opacity:
+                        1
+                },
+
+                {
+                    transform:
+                        "translate(-50%,-100px) scale(2)",
+                    opacity:
+                        0
+                }
+
+            ],
+            {
+                duration:
+                    750,
+                easing:
+                    "ease-out"
+            }
+        );
+
+
+    sparkleLayer.appendChild(
+        sparkle
+    );
+
+
+    animation.finished.then(
+        function(){
+
+            sparkle.remove();
+
+        }
+    );
+
+}
+
+
+function createSparklesAround(
+    x,
+    y,
+    amount
+){
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        setTimeout(
+            function(){
+
+                createSparkle(
+                    x +
+                    (
+                        Math.random()
+                        -
+                        .5
+                    ) * 300,
+
+                    y +
+                    (
+                        Math.random()
+                        -
+                        .5
+                    ) * 200
+                );
+
+            },
+            i * 25
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   THỔI NẾN
+============================================================ */
+
+document
+    .getElementById(
+        "blowButton"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            document
+                .querySelectorAll(
+                    ".flame"
+                )
+                .forEach(
+                    function(
+                        flame
+                    ){
+
+                        flame.style.animation =
+                            "none";
+
+                        flame.style.opacity =
+                            "0";
+
+                        flame.style.transform =
+                            "translateX(-50%) scale(.1)";
+
+                    }
+                );
+
+
+            createConfetti(
+                300
+            );
+
+
+            createHearts(
+                70
+            );
+
+
+            createSparklesAround(
+                window.innerWidth / 2,
+                window.innerHeight / 2,
+                80
+            );
+
+
+            setTimeout(
+                function(){
+
+                    alert(
+                        "🎂 Điều ước đã được gửi đi!\n\n" +
+                        "Chúc " +
+                        CONFIG.name +
+                        " tuổi mới thật vui vẻ, " +
+                        "hạnh phúc và luôn rực rỡ! 💗"
+                    );
+
+                },
+                500
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   FINAL BUTTON
+============================================================ */
+
+document
+    .getElementById(
+        "finalButton"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            createConfetti(
+                500
+            );
+
+            createHearts(
+                100
+            );
+
+            createSparklesAround(
+                window.innerWidth / 2,
+                window.innerHeight / 2,
+                120
+            );
+
+
+            this.textContent =
+                "💗 HAPPY BIRTHDAY 💗";
+
+
+            setTimeout(
+                function(){
+
+                    document
+                        .querySelector(
+                            ".final-box"
+                        )
+                        .scrollIntoView({
+                            behavior:
+                                "smooth",
+                            block:
+                                "center"
+                        });
+
+                },
+                300
+            );
+
+        }
+    );
+
+
+/* ============================================================
+   TIM BAY TỰ ĐỘNG
+============================================================ */
+
+setInterval(
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            createHearts(
+                1
+            );
+
+        }
+
+    },
+    1400
+);
+
+
+/* ============================================================
+   CONFETTI ĐỊNH KỲ NHẸ
+============================================================ */
+
+let celebrationCounter =
+    0;
+
+
+setInterval(
+    function(){
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            celebrationCounter++;
+
+
+            if(
+                celebrationCounter %
+                5 ===
+                0
+            ){
+
+                createConfetti(
+                    8
+                );
+
+            }
+
+        }
+
+    },
+    3000
+);
+
+
+/* ============================================================
+   CLICK GALLERY RANDOM SPARKLE
+============================================================ */
+
+gallery.addEventListener(
+    "click",
+    function(){
+
+        createConfetti(
+            12
+        );
+
+    }
+);
+
+
+/* ============================================================
+   KEYBOARD EASTER EGG
+============================================================ */
+
+let typedText =
+    "";
+
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key.length ===
+            1
+        ){
+
+            typedText +=
+                event.key
+                    .toLowerCase();
+
+
+            if(
+                typedText.length >
+                20
+            ){
+
+                typedText =
+                    typedText.slice(
+                        -20
+                    );
+
+            }
+
+
+            if(
+                typedText.includes(
+                    "birthday"
+                )
+            ){
+
+                createConfetti(
+                    200
+                );
+
+                createHearts(
+                    50
+                );
+
+                typedText =
+                    "";
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   DOUBLE CLICK
+============================================================ */
+
+document.addEventListener(
+    "dblclick",
+    function(){
+
+        createConfetti(
+            80
+        );
+
+        createHearts(
+            20
+        );
+
+    }
+);
+
+
+/* ============================================================
+   STAR BACKGROUND
+============================================================ */
+
+const starCanvas =
+    document.getElementById(
+        "starCanvas"
+    );
+
+const starContext =
+    starCanvas.getContext(
+        "2d"
+    );
+
+
+let stars = [];
+
+
+function resizeCanvas(){
+
+    starCanvas.width =
+        window.innerWidth *
+        devicePixelRatio;
+
+    starCanvas.height =
+        window.innerHeight *
+        devicePixelRatio;
+
+    starCanvas.style.width =
+        window.innerWidth +
+        "px";
+
+    starCanvas.style.height =
+        window.innerHeight +
+        "px";
+
+    starContext.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+    );
+
+}
+
+
+function createStars(){
+
+    stars = [];
+
+
+    const amount =
+        Math.min(
+            150,
+            Math.floor(
+                window.innerWidth /
+                8
+            )
+        );
+
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        stars.push({
+
+            x:
+                Math.random() *
+                window.innerWidth,
+
+            y:
+                Math.random() *
+                window.innerHeight,
+
+            radius:
+                Math.random() *
+                1.7 +
+                .2,
+
+            alpha:
+                Math.random(),
+
+            speed:
+                Math.random() *
+                .02 +
+                .005
+
+        });
+
+    }
+
+}
+
+
+function drawStars(){
+
+    starContext.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+
+    stars.forEach(
+        function(
+            star
+        ){
+
+            star.alpha +=
+                star.speed;
+
+
+            if(
+                star.alpha >
+                1
+            ){
+
+                star.alpha =
+                    0;
+
+            }
+
+
+            starContext.beginPath();
+
+            starContext.arc(
+                star.x,
+                star.y,
+                star.radius,
+                0,
+                Math.PI * 2
+            );
+
+
+            starContext.fillStyle =
+                `rgba(
+                    255,
+                    255,
+                    255,
+                    ${star.alpha}
+                )`;
+
+
+            starContext.fill();
+
+        }
+    );
+
+
+    requestAnimationFrame(
+        drawStars
+    );
+
+}
+
+
+resizeCanvas();
+
+createStars();
+
+drawStars();
+
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        resizeCanvas();
+
+        createStars();
+
+    }
+);
+
+
+/* ============================================================
+   MƯA TIM KHI CUỘN
+============================================================ */
+
+let lastScroll =
+    0;
+
+
+window.addEventListener(
+    "scroll",
+    function(){
+
+        const current =
+            window.scrollY;
+
+
+        if(
+            Math.abs(
+                current -
+                lastScroll
+            ) > 80
+        ){
+
+            createHearts(
+                3
+            );
+
+            lastScroll =
+                current;
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   RANDOM SPARKLE KHỞI ĐỘNG
+============================================================ */
+
+setTimeout(
+    function(){
+
+        createHearts(
+            10
+        );
+
+    },
+    1000
+);
+
+
+setTimeout(
+    function(){
+
+        createConfetti(
+            40
+        );
+
+    },
+    2500
+);
+
+
+/* ============================================================
+   BẢO VỆ ẢNH KHỎI KÉO
+============================================================ */
+
+document.addEventListener(
+    "dragstart",
+    function(event){
+
+        if(
+            event.target.tagName ===
+            "IMG"
+        ){
+
+            event.preventDefault();
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   CHUỘT DI CHUYỂN TẠO SPARKLE NHẸ
+============================================================ */
+
+let mouseCounter =
+    0;
+
+
+document.addEventListener(
+    "mousemove",
+    function(event){
+
+        mouseCounter++;
+
+
+        if(
+            mouseCounter %
+            25 ===
+            0
+        ){
+
+            createSparkle(
+                event.clientX,
+                event.clientY
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   TOUCH MOBILE
+============================================================ */
+
+document.addEventListener(
+    "touchstart",
+    function(event){
+
+        if(
+            event.touches.length >
+            0
+        ){
+
+            const touch =
+                event.touches[0];
+
+
+            createSparkle(
+                touch.clientX,
+                touch.clientY
+            );
+
+        }
+
+    }
+);
+
+
+/* ============================================================
+   HAPPY BIRTHDAY AUTO EFFECT
+============================================================ */
+
+function birthdayCelebration(){
+
+    createConfetti(
+        120
+    );
+
+    createHearts(
+        30
+    );
+
+    createSparklesAround(
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        40
+    );
+
+}
+
+
+/* ============================================================
+   PRELOAD ẢNH
+============================================================ */
+
+function preloadImages(){
+
+    CONFIG.photos.forEach(
+        function(
+            source
+        ){
+
+            const image =
+                new Image();
+
+            image.src =
+                source;
+
+        }
+    );
+
+}
+
+
+preloadImages();
+
+
+/* ============================================================
+   PRELOAD AUDIO LIST
+============================================================ */
+
+function checkSongs(){
+
+    CONFIG.songs.forEach(
+        function(
+            song
+        ){
+
+            const testAudio =
+                new Audio();
+
+            testAudio.preload =
+                "metadata";
+
+            testAudio.src =
+                song.file;
+
+        }
+    );
+
+}
+
+
+checkSongs();
+
+
+/* ============================================================
+   INITIALIZE
+============================================================ */
+
+console.log(
+    "Birthday website loaded successfully."
+);
+
+console.log(
+    "Photos:",
+    CONFIG.photos.length
+);
+
+console.log(
+    "Songs:",
+    CONFIG.songs.length
+);
+
+console.log(
+    "Birthday:",
+    CONFIG.birthday
+);
+
+console.log(
+    "Name:",
+    CONFIG.name
+);
+
+
+/* ============================================================
+   END
+============================================================ */
+
+</script>
+
+</body>
+</html>
